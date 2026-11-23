@@ -1,0 +1,561 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000001 /* V2rayaControlWidgetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* V2rayaControlWidgetApp.swift */; };
+		A10000000000000000000002 /* V2rayaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* V2rayaModel.swift */; };
+		A10000000000000000000003 /* TrafficWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000003 /* TrafficWebSocket.swift */; };
+		A10000000000000000000004 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000004 /* MainView.swift */; };
+		A10000000000000000000005 /* TrafficChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000005 /* TrafficChart.swift */; };
+		A10000000000000000000007 /* V2rayAStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000003 /* V2rayAStore.swift */; };
+		A10000000000000000000008 /* V2rayAAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000004 /* V2rayAAPI.swift */; };
+		A10000000000000000000009 /* ServiceControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000010 /* ServiceControl.swift */; };
+		A1000000000000000000000A /* Installer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000011 /* Installer.swift */; };
+		A1000000000000000000000B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000012 /* SettingsView.swift */; };
+		A1000000000000000000000C /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000013 /* SettingsWindowController.swift */; };
+		B10000000000000000000001 /* V2rayAWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000001 /* V2rayAWidget.swift */; };
+		B10000000000000000000002 /* ToggleProxyIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000002 /* ToggleProxyIntent.swift */; };
+		B10000000000000000000003 /* V2rayAStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000003 /* V2rayAStore.swift */; };
+		B10000000000000000000004 /* V2rayAAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000004 /* V2rayAAPI.swift */; };
+		B10000000000000000000005 /* V2rayaWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B200000000000000000000B0 /* V2rayaWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B10000000000000000000006 /* TrafficSampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000008 /* TrafficSampler.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A40000000000000000000002 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A30000000000000000000004 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B30000000000000000000001;
+			remoteInfo = V2rayaWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B300000000000000000000F0 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B10000000000000000000005 /* V2rayaWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A20000000000000000000001 /* V2rayaControlWidgetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2rayaControlWidgetApp.swift; sourceTree = "<group>"; };
+		A20000000000000000000002 /* V2rayaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2rayaModel.swift; sourceTree = "<group>"; };
+		A20000000000000000000003 /* TrafficWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficWebSocket.swift; sourceTree = "<group>"; };
+		A20000000000000000000004 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		A20000000000000000000005 /* TrafficChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficChart.swift; sourceTree = "<group>"; };
+		A20000000000000000000007 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A20000000000000000000009 /* V2rayaControlWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = V2rayaControlWidget.entitlements; sourceTree = "<group>"; };
+		A200000000000000000000A0 /* V2raya Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "V2raya Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B20000000000000000000001 /* V2rayAWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2rayAWidget.swift; sourceTree = "<group>"; };
+		B20000000000000000000002 /* ToggleProxyIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleProxyIntent.swift; sourceTree = "<group>"; };
+		B20000000000000000000003 /* V2rayAStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2rayAStore.swift; sourceTree = "<group>"; };
+		B20000000000000000000004 /* V2rayAAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2rayAAPI.swift; sourceTree = "<group>"; };
+		B20000000000000000000006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B20000000000000000000007 /* V2rayaWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = V2rayaWidget.entitlements; sourceTree = "<group>"; };
+		B20000000000000000000008 /* TrafficSampler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrafficSampler.swift; sourceTree = "<group>"; };
+		B20000000000000000000010 /* ServiceControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceControl.swift; sourceTree = "<group>"; };
+		B20000000000000000000011 /* Installer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Installer.swift; sourceTree = "<group>"; };
+		B20000000000000000000012 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B20000000000000000000013 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
+		B20000000000000000000014 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A1000000000000000000000D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000014 /* Assets.xcassets */; };
+		B200000000000000000000B0 /* V2rayaWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = V2rayaWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A30000000000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B30000000000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A30000000000000000000005 /* V2rayaControlWidget */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000001 /* V2rayaControlWidgetApp.swift */,
+				A30000000000000000000006 /* Models */,
+				A30000000000000000000007 /* Views */,
+				A30000000000000000000012 /* Shared */,
+				A20000000000000000000009 /* V2rayaControlWidget.entitlements */,
+				B20000000000000000000014 /* Assets.xcassets */,
+				A20000000000000000000007 /* Info.plist */,
+			);
+			path = V2rayaControlWidget;
+			sourceTree = "<group>";
+		};
+		A30000000000000000000006 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000002 /* V2rayaModel.swift */,
+				A20000000000000000000003 /* TrafficWebSocket.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A30000000000000000000007 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000004 /* MainView.swift */,
+				A20000000000000000000005 /* TrafficChart.swift */,
+				B20000000000000000000012 /* SettingsView.swift */,
+				B20000000000000000000013 /* SettingsWindowController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A30000000000000000000008 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A200000000000000000000A0 /* V2raya Control.app */,
+				B200000000000000000000B0 /* V2rayaWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A30000000000000000000011 = {
+			isa = PBXGroup;
+			children = (
+				A30000000000000000000005 /* V2rayaControlWidget */,
+				B30000000000000000000010 /* V2rayaWidget */,
+				A30000000000000000000008 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A30000000000000000000012 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				B20000000000000000000003 /* V2rayAStore.swift */,
+				B20000000000000000000004 /* V2rayAAPI.swift */,
+				B20000000000000000000010 /* ServiceControl.swift */,
+				B20000000000000000000011 /* Installer.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		B30000000000000000000010 /* V2rayaWidget */ = {
+			isa = PBXGroup;
+			children = (
+				B20000000000000000000001 /* V2rayAWidget.swift */,
+				B20000000000000000000002 /* ToggleProxyIntent.swift */,
+				B20000000000000000000008 /* TrafficSampler.swift */,
+				B20000000000000000000006 /* Info.plist */,
+				B20000000000000000000007 /* V2rayaWidget.entitlements */,
+			);
+			path = V2rayaWidget;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A30000000000000000000001 /* V2rayaControlWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A3000000000000000000000C /* Build configuration list for PBXNativeTarget "V2rayaControlWidget" */;
+			buildPhases = (
+				A30000000000000000000003 /* Sources */,
+				A30000000000000000000002 /* Frameworks */,
+				A30000000000000000000009 /* Resources */,
+				B300000000000000000000F0 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A40000000000000000000001 /* PBXTargetDependency */,
+			);
+			name = V2rayaControlWidget;
+			productName = V2rayaControlWidget;
+			productReference = A200000000000000000000A0 /* V2raya Control.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B30000000000000000000001 /* V2rayaWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B3000000000000000000000C /* Build configuration list for PBXNativeTarget "V2rayaWidget" */;
+			buildPhases = (
+				B30000000000000000000003 /* Sources */,
+				B30000000000000000000002 /* Frameworks */,
+				B30000000000000000000009 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = V2rayaWidget;
+			productName = V2rayaWidget;
+			productReference = B200000000000000000000B0 /* V2rayaWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A30000000000000000000004 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					A30000000000000000000001 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					B30000000000000000000001 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = A3000000000000000000000B /* Build configuration list for PBXProject "V2rayaControlWidget" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A30000000000000000000011;
+			productRefGroup = A30000000000000000000008 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A30000000000000000000001 /* V2rayaControlWidget */,
+				B30000000000000000000001 /* V2rayaWidget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A30000000000000000000009 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000000000000000000000D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B30000000000000000000009 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A30000000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000001 /* V2rayaControlWidgetApp.swift in Sources */,
+				A10000000000000000000002 /* V2rayaModel.swift in Sources */,
+				A10000000000000000000003 /* TrafficWebSocket.swift in Sources */,
+				A10000000000000000000004 /* MainView.swift in Sources */,
+				A10000000000000000000005 /* TrafficChart.swift in Sources */,
+				A10000000000000000000007 /* V2rayAStore.swift in Sources */,
+				A10000000000000000000008 /* V2rayAAPI.swift in Sources */,
+				A10000000000000000000009 /* ServiceControl.swift in Sources */,
+				A1000000000000000000000A /* Installer.swift in Sources */,
+				A1000000000000000000000B /* SettingsView.swift in Sources */,
+				A1000000000000000000000C /* SettingsWindowController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B30000000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B10000000000000000000001 /* V2rayAWidget.swift in Sources */,
+				B10000000000000000000002 /* ToggleProxyIntent.swift in Sources */,
+				B10000000000000000000003 /* V2rayAStore.swift in Sources */,
+				B10000000000000000000004 /* V2rayAAPI.swift in Sources */,
+				B10000000000000000000006 /* TrafficSampler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A40000000000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B30000000000000000000001 /* V2rayaWidget */;
+			targetProxy = A40000000000000000000002 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A3000000000000000000000D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 547386NZF6;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A3000000000000000000000E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 547386NZF6;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A3000000000000000000000F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = V2rayaControlWidget/V2rayaControlWidget.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = V2rayaControlWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gzm.v2rayactrl2;
+				PRODUCT_NAME = "V2raya Control";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A30000000000000000000010 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = V2rayaControlWidget/V2rayaControlWidget.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = V2rayaControlWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gzm.v2rayactrl2;
+				PRODUCT_NAME = "V2raya Control";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B3000000000000000000000D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = V2rayaWidget/V2rayaWidget.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_NETWORK_CLIENT = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = V2rayaWidget/Info.plist;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gzm.v2rayactrl2.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B3000000000000000000000E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = V2rayaWidget/V2rayaWidget.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_NETWORK_CLIENT = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = V2rayaWidget/Info.plist;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gzm.v2rayactrl2.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A3000000000000000000000B /* Build configuration list for PBXProject "V2rayaControlWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A3000000000000000000000D /* Debug */,
+				A3000000000000000000000E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A3000000000000000000000C /* Build configuration list for PBXNativeTarget "V2rayaControlWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A3000000000000000000000F /* Debug */,
+				A30000000000000000000010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B3000000000000000000000C /* Build configuration list for PBXNativeTarget "V2rayaWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B3000000000000000000000D /* Debug */,
+				B3000000000000000000000E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A30000000000000000000004 /* Project object */;
+}
