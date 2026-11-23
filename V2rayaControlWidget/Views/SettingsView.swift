@@ -59,6 +59,20 @@ struct SettingsView: View {
 
             Divider()
 
+            // MARK: 性能
+            GroupBox(label: Label("性能", systemImage: "tortoise")) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Toggle("静默状态", isOn: silentBinding)
+                    Text("降低后台活动：状态轮询 8s→30s、组件仅在状态或速率显著变化时刷新（空闲 ≥60s）、开关请求改为文件事件驱动、流量兜底轮询 15s。功能完全不变，仅减少唤醒与耗电。")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+
+            Divider()
+
             // MARK: 凭据
             GroupBox(label: Label("v2rayA 管理账号", systemImage: "person.badge.key")) {
                 VStack(spacing: 6) {
@@ -123,6 +137,11 @@ struct SettingsView: View {
         if panel.runModal() == .OK, let url = panel.url {
             installDir = url.path
         }
+    }
+
+    private var silentBinding: Binding<Bool> {
+        Binding(get: { model.silentMode },
+                set: { model.setSilentMode($0) })
     }
 
     private func saveDir() {

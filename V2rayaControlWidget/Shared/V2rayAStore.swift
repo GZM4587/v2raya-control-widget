@@ -30,7 +30,7 @@ enum V2rayAStore {
 
     private static func saveDict(_ dict: [String: Any]) {
         queue.sync {
-            let data = (try? JSONSerialization.data(withJSONObject: dict, options: [.prettyPrinted])) ?? Data()
+            let data = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
             try? data.write(to: sharedPath, options: .atomic)
         }
     }
@@ -53,6 +53,16 @@ enum V2rayAStore {
             var v = newValue.hasSuffix("/") ? String(newValue.dropLast()) : newValue
             if v.hasPrefix("~") { v = NSHomeDirectory() + v.dropFirst() }
             d["installDir"] = v
+            saveDict(d)
+        }
+    }
+
+    // MARK: - 静默模式
+    static var silentMode: Bool {
+        get { loadDict()["silentMode"] as? Bool ?? false }
+        set {
+            var d = loadDict()
+            d["silentMode"] = newValue
             saveDict(d)
         }
     }

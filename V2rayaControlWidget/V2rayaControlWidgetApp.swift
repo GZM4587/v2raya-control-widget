@@ -18,7 +18,6 @@ struct V2rayaControlWidgetApp: App {
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private var widgetToggleWatcher: Timer?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 纯菜单栏应用：不占 Dock、不抢焦点
@@ -26,24 +25,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         Task { @MainActor in
             V2rayaModel.shared.start()
         }
-        watchWidgetToggleRequests()
-    }
-
-    /// 桌面小组件在 App 未运行时会把开关请求写入 App Group，这里轮询并补发。
-    private func watchWidgetToggleRequests() {
-        var lastHandled = V2rayAStore.currentToggleCounter
-        widgetToggleWatcher = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in
-            guard let pending = V2rayAStore.peekPendingToggle(lastHandled: lastHandled) else { return }
-            lastHandled = pending.counter
-            Task { @MainActor in
-                await V2rayaModel.shared.applyDesiredState(pending.desired)
-            }
-        }
-        RunLoop.main.add(widgetToggleWatcher!, forMode: .common)
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        widgetToggleWatcher?.invalidate()
         Task { @MainActor in
             V2rayaModel.shared.stop()
         }

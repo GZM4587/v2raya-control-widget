@@ -13,13 +13,17 @@ final class TrafficWebSocket {
     private var shouldReconnect = true
     private var connected = false
 
+    private static let sharedSession: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.waitsForConnectivity = false
+        return URLSession(configuration: config)
+    }()
+
     init(onSample: @escaping @Sendable (Int64, Int64, Int64, Int64) -> Void,
          onStateChange: @escaping @Sendable (Bool) -> Void) {
         self.onSample = onSample
         self.onStateChange = onStateChange
-        let config = URLSessionConfiguration.default
-        config.waitsForConnectivity = false
-        session = URLSession(configuration: config)
+        session = TrafficWebSocket.sharedSession
     }
 
     func connect(urlString: String) {

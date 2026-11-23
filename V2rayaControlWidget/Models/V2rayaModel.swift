@@ -18,6 +18,14 @@ final class V2rayaModel: ObservableObject {
     @Published var downTotal: Int64 = 0        // 累计字节
     @Published var history: [TrafficPoint] = []
     @Published var needsLogin = false
+    @Published var silentMode = false          // 静默状态：降低轮询/唤醒/组件刷新频率
+
+    /// 全局复用的短超时会话（避免每次轮询新建 URLSession）
+    private lazy var apiSession: URLSession = {
+        let c = URLSessionConfiguration.ephemeral
+        c.timeoutIntervalForRequest = 6
+        return URLSession(configuration: c)
+    }()
 
     // MARK: - Config
     let baseURL = "http://127.0.0.1:2017"
@@ -81,19 +89,64 @@ final class V2rayaModel: ObservableObject {
 
     // MARK: - Lifecycle
     func start() {
+        silentMode = V2rayAStore.silentMode
+        rebuildTimers()
         Task { await refreshStatus() }
-        pollTimer = Timer.scheduledTimer(withTimeInterval: 8, repeats: true) { [weak self] _ in
+        ensureTrafficStream()
+    }
+
+    /// 按静默模式（重）建所有定时器/监视器
+    func rebuildTimers() {
+        pollTimer?.invalidate(); pollTimer = nil
+        fallbackTimer?.invalidate(); fallbackTimer = nil
+        stopToggleWatch()
+
+        let pollInterval: TimeInterval = silentMode ? 30 : 8
+        pollTimer = Timer.scheduledTimer(withTimeInterval: pollInterval, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.refreshStatusTask() }
         }
         RunLoop.main.add(pollTimer!, forMode: .common)
-        ensureTrafficStream()
-        startStatsFallback()
+
+        if silentMode {
+            watchToggleFile()        // 事件驱动，零轮询
+        } else {
+            startToggleWatchTimer()  // 原 3s 轮询
+        }
+        // 非静默：保持原行为（fallback 常驻）；静默：仅断线时启用
+        if silentMode {
+            if !wsConnected { startStatsFallback() }
+        } else {
+            startStatsFallback()
+        }
+    }
+
+    func setSilentMode(_ on: Bool) {
+        silentMode = on
+        V2rayAStore.silentMode = on
+        rebuildTimers()
+        publishToWidget(force: true)
+    }
+
+    /// 诊断遥测：把当前生效的节流参数写进共享文件，供外部核对
+    func writeDiagnostics() {
+        V2rayAStore.writeDebug([
+            "source": "diagnostics",
+            "silent": silentMode,
+            "pollInterval": silentMode ? 30 : 8,
+            "reloadGap": silentMode ? 60 : 15,
+            "writeGap": silentMode ? 10 : 5,
+            "fallback": silentMode ? (wsConnected ? "stopped(ws)" : "15s") : "5s(常驻)",
+            "watcher": silentMode ? "file-event" : "timer-3s",
+            "wsConnected": wsConnected,
+            "time": Date().formatted(date: .omitted, time: .standard),
+        ])
     }
 
     func stop() {
         pollTimer?.invalidate()
         pollTimer = nil
         stopStatsFallback()
+        stopToggleWatch()
         ws?.disconnect()
         ws = nil
     }
@@ -106,9 +159,7 @@ final class V2rayaModel: ObservableObject {
     func refreshStatus() async {
         guard let url = URL(string: "\(baseURL)/api/version") else { return }
         do {
-            let config = URLSessionConfiguration.ephemeral
-            config.timeoutIntervalForRequest = 5
-            let (data, _) = try await URLSession(configuration: config).data(from: url)
+            let (data, _) = try await apiSession.data(from: url)
             struct VersionResponse: Decodable {
                 struct Payload: Decodable {
                     let version: String?
@@ -122,6 +173,7 @@ final class V2rayaModel: ObservableObject {
             version = resp.data?.version ?? "—"
             isRunning = (resp.data?.lastKernelExit == "running")
             lastError = nil
+            pollCounter += 1
             publishToWidget()
             ensureTrafficStream()
         } catch {
@@ -306,7 +358,13 @@ final class V2rayaModel: ObservableObject {
             let client = TrafficWebSocket { [weak self] up, down, upTotal, downTotal in
                 Task { @MainActor in self?.recordSample(up: up, down: down, upTotal: upTotal, downTotal: downTotal) }
             } onStateChange: { [weak self] connected in
-                Task { @MainActor in self?.wsConnected = connected }
+                Task { @MainActor in
+                    self?.wsConnected = connected
+                    // 静默模式：WS 连上就停 HTTP 兜底轮询，断线才恢复
+                    if self?.silentMode == true {
+                        connected ? self?.stopStatsFallback() : self?.startStatsFallback()
+                    }
+                }
             }
             ws = client
             client.connect(urlString: Self.wsURL(token: token))
@@ -337,7 +395,8 @@ final class V2rayaModel: ObservableObject {
 
     private func startStatsFallback() {
         guard fallbackTimer == nil else { return }
-        fallbackTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
+        let interval: TimeInterval = silentMode ? 15 : 5
+        fallbackTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
             Task { @MainActor in await self?.pollStatsHTTP() }
         }
         RunLoop.main.add(fallbackTimer!, forMode: .common)
@@ -367,10 +426,56 @@ final class V2rayaModel: ObservableObject {
     }
 
     private var wsSampleCount = 0
+    private var pollCounter = 0
     // 差分基准：瞬时 up/down 字段波动极大（多为 0），改用累计字节差分计算速率
     private var lastUpTotal: Int64?
     private var lastDownTotal: Int64?
     private var lastSampleTime: Date?
+
+    // MARK: - 小组件开关请求监视
+    private var toggleWatcher: Timer?
+    private var fileWatcher: DispatchSourceFileSystemObject?
+    private var watchedFd: Int32 = -1
+    private var lastHandledToggle = 0
+
+    private func startToggleWatchTimer() {
+        lastHandledToggle = V2rayAStore.currentToggleCounter
+        toggleWatcher = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in
+            guard let pending = V2rayAStore.peekPendingToggle(lastHandled: self?.lastHandledToggle ?? 0) else { return }
+            self?.lastHandledToggle = pending.counter
+            Task { @MainActor in await self?.applyDesiredState(pending.desired) }
+        }
+        RunLoop.main.add(toggleWatcher!, forMode: .common)
+    }
+
+    /// 静默模式：DispatchSource 监听共享文件写入（事件驱动，零轮询）
+    private func watchToggleFile() {
+        stopToggleWatch()
+        lastHandledToggle = V2rayAStore.currentToggleCounter
+        let path = V2rayAStore.sharedPath.path
+        let fd = open(path, O_EVTONLY)
+        guard fd >= 0 else { return }
+        watchedFd = fd
+        let source = DispatchSource.makeFileSystemObjectSource(
+            fileDescriptor: fd, eventMask: .write, queue: .main)
+        source.setEventHandler { [weak self] in
+            guard let self else { return }
+            // 原子写入会替换 inode：事件触发后重开监听
+            self.watchToggleFile()
+            guard let pending = V2rayAStore.peekPendingToggle(lastHandled: self.lastHandledToggle) else { return }
+            self.lastHandledToggle = pending.counter
+            Task { @MainActor in await self.applyDesiredState(pending.desired) }
+        }
+        source.setCancelHandler { close(fd) }
+        source.resume()
+        fileWatcher = source
+    }
+
+    private func stopToggleWatch() {
+        toggleWatcher?.invalidate(); toggleWatcher = nil
+        fileWatcher?.cancel(); fileWatcher = nil
+        watchedFd = -1
+    }
 
     private func recordSample(up: Int64, down: Int64, upTotal: Int64, downTotal: Int64) {
         let now = Date()
@@ -399,7 +504,7 @@ final class V2rayaModel: ObservableObject {
         }
         // 遥测：App 端 WS 收到的原始样本
         wsSampleCount += 1
-        if wsSampleCount % 10 == 1 {
+        if !silentMode, wsSampleCount % 10 == 1 {
             V2rayAStore.writeDebug([
                 "source": "app-ws",
                 "samples": wsSampleCount,
@@ -418,12 +523,33 @@ final class V2rayaModel: ObservableObject {
 
     func publishToWidget(force: Bool = false) {
         let now = Date()
-        let shouldWrite = force || now.timeIntervalSince(lastWidgetWrite) >= 5
-        let shouldReload = force || now.timeIntervalSince(lastWidgetReload) >= 15
+        let writeGap: TimeInterval = silentMode ? 10 : 5
+        let reloadGap: TimeInterval = silentMode ? 60 : 15
+        let shouldWrite = force || now.timeIntervalSince(lastWidgetWrite) >= writeGap
+        // 静默模式：仅当状态翻转或速率显著变化（>10% 且绝对值 >5KB/s）才请求组件刷新
+        var significant = force
+        if silentMode, !significant {
+            if lastPubRunning != isRunning { significant = true }
+            else if (Double(abs(upSpeed - lastPubUp)) > max(5_000, Double(lastPubUp) * 0.1))
+                 || (Double(abs(downSpeed - lastPubDown)) > max(5_000, Double(lastPubDown) * 0.1)) {
+                significant = true
+            }
+        }
+        let shouldReload = force || (silentMode ? significant : now.timeIntervalSince(lastWidgetReload) >= 15)
         guard shouldWrite || shouldReload else { return }
 
         if shouldWrite {
             lastWidgetWrite = now
+            V2rayAStore.writeDebug([
+                "source": "app-publish",
+                "silent": silentMode,
+                "polls": pollCounter,
+                "pollInterval": silentMode ? 30 : 8,
+                "reloadGap": silentMode ? 60 : 15,
+                "upSpeed": upSpeed, "downSpeed": downSpeed,
+                "wsConnected": wsConnected,
+                "time": Date().formatted(date: .omitted, time: .standard),
+            ])
             let snap = V2rayAStore.Snapshot(
                 isRunning: isRunning,
                 version: version,
@@ -438,9 +564,15 @@ final class V2rayaModel: ObservableObject {
         }
         if shouldReload {
             lastWidgetReload = now
+            lastPubRunning = isRunning
+            lastPubUp = upSpeed
+            lastPubDown = downSpeed
             WidgetCenter.shared.reloadAllTimelines()
         }
     }
+    private var lastPubRunning: Bool?
+    private var lastPubUp: Int64 = 0
+    private var lastPubDown: Int64 = 0
 
     // MARK: - Helpers
     func formatBytes(_ bytes: Int64, perSecond: Bool = false) -> String {
