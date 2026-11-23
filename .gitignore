@@ -1,0 +1,19 @@
+# Xcode
+.build/
+dist/
+DerivedData/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+xcuserdata/
+
+# macOS
+.DS_Store
+._*
+
+# SwiftPM
+.swiftpm/
+Package.resolved
+
+# 临时
+*.log
+tmp/
